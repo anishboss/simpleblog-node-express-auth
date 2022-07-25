@@ -3,7 +3,7 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 class HomeController {
     static indexPage = async (req, res) => {
-        console.log(`username session ${req.session.username}`);
+        // console.log(`username session ${req.session.username}`);
         if (!req.session.username) {
             res.locals.username = '';
         }
@@ -14,19 +14,19 @@ class HomeController {
     };
 
     static postPage = (req, res) => {
-        console.log("post page");;
+        // console.log("post page");;
         res.render('post');
     };
 
     static loginPage = (req, res) => {
-        console.log("login Page");
+        // console.log("login Page");
         res.locals.username = '';
         res.render('login', { 'message': '' });
     };
 
     static loginUser = async (req, res) => {
         try {
-            console.log("login user post method");
+            // console.log("login user post method");
             const { email, password } = req.body;
 
 
@@ -35,7 +35,7 @@ class HomeController {
                 if (user) {
                     const isValid = await bcrypt.compare(password, user.password);
                     if (isValid) {
-                        console.log("username and password matched");
+                        // console.log("username and password matched");
                         req.session.clientId = user._id;
                         req.session.username = user.username;
                         res.locals.username = req.session.username;
@@ -43,17 +43,17 @@ class HomeController {
                         res.redirect('/');
                     }
                     else {
-                        console.log("username or password is invalid");
+                        // console.log("username or password is invalid");
                         res.locals.username = '';
                         res.render('login', { 'message': 'invalid credentials' });
                     }
                 } else {
-                    console.log("user not found");
+                    // console.log("user not found");
                     res.locals.username = '';
                     res.render('login', { 'message': 'invalid credentials' });
                 }
             } else {
-                console.log("email or user name not found");
+                // console.log("email or user name not found");
                 res.locals.username = '';
                 res.render('login', { 'message': 'all fields are required' });
             }
@@ -64,20 +64,20 @@ class HomeController {
     };
 
     static registerPage = (req, res) => {
-        console.log("registerPage");
+        // console.log("registerPage");
         res.locals.username = '';
         res.render('register', { 'message': '' });
     };
 
     static registerUser = async (req, res) => {
         try {
-            console.log("registe user from post method");
+            // console.log("registe user from post method");
             const { username, email, password, password1 } = req.body;
-            console.log(req.body);
+            // console.log(req.body);
             if (username || email || password || password1) {
 
                 const existingUser = await User.findOne({ 'email': email });
-                console.log(`existeingUser : ${existingUser}`);
+                // console.log(`existeingUser : ${existingUser}`);
                 if (!existingUser) {
                     if (password === password1) {
                         const user = User({ 'username': username, 'email': email, 'password': password });
@@ -86,17 +86,17 @@ class HomeController {
                         res.render('register', { 'message': "User Created Sucessfully" });
                     }
                     else {
-                        console.log("password and confirm password Incorrect");
+                        // console.log("password and confirm password Incorrect");
                         res.render('register', { 'message': "password and confirm password incorrect" });
                     }
                 }
                 else {
-                    console.log("Email already registered.Cannot create User");
+                    // console.log("Email already registered.Cannot create User");
                     res.render('register', { 'message': 'email already registered.cannot create user' });
 
                 }
             } else {
-                console.log("Please enter all the Fields");
+                // console.log("Please enter all the Fields");
                 res.render("register", { 'message': "please enter all the fileds" });
             }
         }
@@ -107,7 +107,7 @@ class HomeController {
     };
 
     static logoutUser = async (req, res) => {
-        console.log("logout user page");
+        // console.log("logout user page");
         if (req.session.username) {
             req.session.destroy();
             res.locals.username = '';

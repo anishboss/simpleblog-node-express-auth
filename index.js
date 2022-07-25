@@ -19,7 +19,7 @@ app.use(session({
     secret : 'iamsecretkey',
     resave : false,
     saveUninitialized : true,
-    cookie : {maxAge : 5 * 60 *1000 }
+    cookie : {maxAge : 15 * 24 * 60 * 60 *1000 }
 }));
 
 app.use(express.urlencoded({extended:false}));
@@ -31,13 +31,11 @@ app.set('view engine','ejs');
 app.use(express.static(publicPath));
 app.use(express.static('public'));
 app.use('/post', express.static(path.join(__dirname, 'public')))
+app.use('/post/edit',express.static(path.join(__dirname,'public')));
 app.use('/',homeRoute);
 
 
-// app.get('/',(req,res)=>{
-//     console.log("get started")
-//     res.send("hello anihs");
-// });
+
 app.listen(PORT,()=>{
     console.log(`server started at port: ${PORT}`);
 });

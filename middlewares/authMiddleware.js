@@ -1,5 +1,5 @@
 const userIsLoggedIn =(req,res,next)=>{
-    console.log("userIsLoggedIn middleware");
+    // console.log("userIsLoggedIn middleware");
     if(req.session.username){
         res.locals.username = req.session.username;
     }else{
@@ -9,11 +9,13 @@ const userIsLoggedIn =(req,res,next)=>{
     next();
 };
 const userIsLoggedOut =(req,res,next)=>{
-    console.log("userISloggedOut middleware");
+    // console.log("userISloggedOut middleware");
     if(req.session.username){
         return res.redirect('/');
     }
     next();
-}
+};
+
+
 
 module.exports = {userIsLoggedIn,userIsLoggedOut};

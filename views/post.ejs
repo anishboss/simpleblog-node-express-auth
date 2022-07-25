@@ -17,6 +17,14 @@
                                 <a href="#!"><%= post.author.username %></a>
                                 on <%= post.createdAt %>
                             </span>
+                            <% if(username) { %>
+                            <form action="/post/edit/<%= post._id %>" method="get">
+                                <button class="btn btn-primary">Edit</button>
+                            </form>
+                            <form action="/post/delete/<%= post._id %>" method="get">
+                                <button class="btn btn-danger">delete</button>
+                            </form>
+                            <% } %>
                         </div>
                     </div>
                 </div>
